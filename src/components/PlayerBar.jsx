@@ -2,26 +2,17 @@ import React from "react";
 import { connect } from "react-redux";
 const mapStateToProps = (state) => state;
 function PlayerBar(props) {
-  console.log(
-    "theSOng is this",
-    props.currentSong.tracks[props.currentSong.song]
-  );
-  /*   if (props.currentSong.tracks[props.currentSong.song]){}else{} */
+  console.log("theSOng is this", props.currentSong.tracks[props.currentSong.song]);
   return (
     <>
       <section id="player">
         <div className="track-nav center">
-          <div
-            id="player-album-info"
-            className="d-flex justify-content-start align-items-center"
-          >
+          <div id="player-album-info" className="d-flex justify-content-start align-items-center">
             <div
               className="player-cover-img"
-              style={{
-                backgroundImage: `url(${
-                  props.currentSong.tracks[props.currentSong.song].title
-                })`,
-              }}
+              /*   style={{
+                backgroundImage: `url(${props.currentSong.tracks[props.currentSong.song].picture})`,
+              }} */
             ></div>
             <div className="song-title-info">
               <div id="player-song-name" className="song-title-small">
@@ -55,13 +46,7 @@ function PlayerBar(props) {
             </div>
             <div className="controls d-flex align-items-center">
               <div className="track-time-current">00:00</div>
-              <input
-                id="player-duration-bar"
-                className="level"
-                type="range"
-                min="0"
-                max="100"
-              />
+              <input id="player-duration-bar" className="level" type="range" min="0" max="100" />
               <div className="track-time-to-finish">00:30</div>
             </div>
           </div>
