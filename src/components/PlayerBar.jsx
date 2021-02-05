@@ -19,7 +19,8 @@ function PlayerBar(props) {
               className="player-cover-img"
               style={{
                 backgroundImage: `url(${
-                  props.currentSong.tracks[props.currentSong.song].title
+                  props.currentSong
+                    .cover /* || "http://placecorgi.com/260/180" */
                 })`,
               }}
             ></div>

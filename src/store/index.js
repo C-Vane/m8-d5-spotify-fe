@@ -15,6 +15,7 @@ const initialState = {
     discover: [],
   },
   currentSong: {
+    cover: "http://placecorgi.com/260/180 ",
     tracks: [],
     song: 0,
   },

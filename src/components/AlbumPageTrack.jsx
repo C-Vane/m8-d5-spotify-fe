@@ -7,11 +7,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch({ type: "SET_CURRENT_SONG", payload: currentSong }),
 });
 
-function AlbumPageTrack({ track, index, trackList, saveCurrentSong }) {
-  const currentSong = {
-    tracks: [...trackList],
-    song: index,
-  };
+function AlbumPageTrack({ track, index, trackList, saveCurrentSong, cover }) {
+  const currentSong = { cover: cover, tracks: [...trackList], song: index };
 
   return (
     <div
