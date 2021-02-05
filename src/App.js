@@ -15,15 +15,16 @@ import ArtistPage from "./components/ArtistPage";
 function App() {
   return (
     <Router>
-      <Redirect to="/home" />
-      <Route path="/" component={Navigation} />
+      {/* <Redirect to="/home" /> */}
+      <SingInPage />
+      {/* <Route path="/" component={Navigation} />
       <Route path="/" exact component={Home} />
       <Route path="/home" component={Home} />
       <Route path="/search" exact component={Search} />
       <Route path="/library" component={YourLibrary} />
       <Route path="/album/" component={AlbumPage} />
       <Route path="/" component={PlayerBar} />
-      <Route path="/artist/:id" component={ArtistPage} />
+      <Route path="/artist/:id" component={ArtistPage} /> */}
     </Router>
   );
 }

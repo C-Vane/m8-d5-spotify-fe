@@ -1,7 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import { Col, Button, Form } from "react-bootstrap";
+import { connect } from "react-redux";
 
-function SingInPage() {
+const mapStateToProps = (state) => state;
+
+const mapDispatchToProps = (dispatch) => ({
+  addUserHandler: (user) => dispatch({ type: "SET_USER", payload: user }),
+});
+
+function SingInPage(props) {
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleInputMail = (e) => {
+    setEmail(e.target.value);
+  };
+  const handleInputName = (e) => {
+    setName(e.target.value);
+  };
+  const handleInputPassword = (e) => {
+    setPassword(e.target.value);
+  };
+
+  console.log(props);
   return (
     <div className="container_sign_in">
       <Col className="main_sing_in pt-3">
@@ -31,7 +53,11 @@ function SingInPage() {
         <Form>
           <Form.Group controlId="formBasicEmail">
             <Form.Label>What's your email?</Form.Label>
-            <Form.Control type="email" placeholder="Enter your email." />
+            <Form.Control
+              type="email"
+              placeholder="Enter your email."
+              onChange={handleInputMail}
+            />
           </Form.Group>
 
           <Form.Group controlId="formBasicEmail">
@@ -41,12 +67,20 @@ function SingInPage() {
 
           <Form.Group controlId="formBasicPassword">
             <Form.Label>Create a password</Form.Label>
-            <Form.Control type="password" placeholder="Create a password." />
+            <Form.Control
+              type="password"
+              placeholder="Create a password."
+              onChange={handleInputPassword}
+            />
           </Form.Group>
 
           <Form.Group controlId="formBasicName">
             <Form.Label>What should we call you?</Form.Label>
-            <Form.Control type="name" placeholder="Enter a profile name." />
+            <Form.Control
+              type="name"
+              placeholder="Enter a profile name."
+              onChange={handleInputName}
+            />
             <h6>This appears on your profile.</h6>
           </Form.Group>
 
@@ -140,4 +174,4 @@ function SingInPage() {
   );
 }
 
-export default SingInPage;
+export default connect(mapStateToProps, mapDispatchToProps)(SingInPage);
