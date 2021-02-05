@@ -1,8 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Spinner } from "react-bootstrap";
 import HomePlaylistAlbumCard from "../HomePlaylistAlbumCard";
+import { connect } from "react-redux";
 
-function PodcastTabContent() {
+const mapStateToProps = (state) => state;
+
+const mapDispatchToProps = (dispatch) => ({
+  storeFetch: (fetchResults) => dispatch({ type: "ADD_SONGS_PODCAST", payload: fetchResults }),
+});
+
+function PodcastTabContent(props) {
+  const { podcast } = props.songs;
   const [topPodcasts, setTopPodcasts] = useState([]);
 
   const [topPodcastsLoaded, setTopPodcastsLoaded] = useState(false);
@@ -24,14 +32,33 @@ function PodcastTabContent() {
     }
   };
 
-  const start = async () => {
+  const startNew = async () => {
     setTopPodcasts((await fetchAlbumDataHandler("chart")).splice(0, 15));
+    setTopPodcastsLoaded(true);
+
+    props.storeFetch(topPodcasts);
+  };
+
+  const startFromState = async () => {
+    await setTopPodcasts(podcast.popularAlbums);
     setTopPodcastsLoaded(true);
   };
 
-  React.useEffect(() => {
-    start();
+  useEffect(() => {
+    if (podcast.topPodcasts && podcast.topPodcasts.length !== 0) {
+      startFromState();
+    } else {
+      startNew();
+    }
   }, []);
+
+  useEffect(() => {
+    if (podcast.topPodcasts && podcast.topPodcasts.length !== 0) {
+      startFromState();
+    } else {
+      startNew();
+    }
+  }, [props.songs.podcast]);
 
   return (
     <div className="tab-pane fade show active" id="podcast" role="tabpanel" aria-labelledby="podcast-tab">
@@ -61,4 +88,4 @@ function PodcastTabContent() {
   );
 }
 
-export default PodcastTabContent;
+export default connect(mapStateToProps, mapDispatchToProps)(PodcastTabContent);

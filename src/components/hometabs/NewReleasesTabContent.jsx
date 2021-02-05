@@ -1,8 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Spinner } from "react-bootstrap";
 import HomeAlbumCard from "../HomeAlbumCard";
+import { connect } from "react-redux";
 
-function NewReleasesTabContent() {
+const mapStateToProps = (state) => state;
+
+const mapDispatchToProps = (dispatch) => ({
+  storeFetch: (fetchResults) => dispatch({ type: "ADD_SONGS_NEW", payload: fetchResults }),
+});
+
+function NewReleasesTabContent(props) {
+  const { newRelease } = props.songs;
   const [newReleases, setNewReleases] = useState([]);
   const [newReleasesLoaded, setNewReleasesLoaded] = useState(false);
 
@@ -31,14 +39,33 @@ function NewReleasesTabContent() {
     }
   };
 
-  const start = async () => {
+  const startNew = async () => {
     setNewReleases((await fetchAlbumDataHandler("playlist/63141574?limit=40")).splice(0, 15));
+    setNewReleasesLoaded(true);
+
+    props.storeFetch(newReleases);
+  };
+
+  const startFromState = async () => {
+    await setNewReleases(newRelease);
     setNewReleasesLoaded(true);
   };
 
   React.useEffect(() => {
-    start();
+    if (newRelease && newRelease.length !== 0) {
+      startFromState();
+    } else {
+      startNew();
+    }
   }, []);
+
+  useEffect(() => {
+    if (newRelease && newRelease.length !== 0) {
+      startFromState();
+    } else {
+      startNew();
+    }
+  }, [props.songs.newRelease]);
 
   return (
     <div className="tab-pane fade show active" id="new-releases" role="tabpanel" aria-labelledby="new-releases-tab">
@@ -66,4 +93,4 @@ function NewReleasesTabContent() {
   );
 }
 
-export default NewReleasesTabContent;
+export default connect(mapStateToProps, mapDispatchToProps)(NewReleasesTabContent);

@@ -2,8 +2,16 @@ import React, { useState } from "react";
 import { Spinner } from "react-bootstrap";
 import HomeAlbumCard from "../HomeAlbumCard";
 import HomePlaylistAlbumCard from "../HomePlaylistAlbumCard";
+import { connect } from "react-redux";
 
-function DiscoverTabContent() {
+const mapStateToProps = (state) => state;
+
+const mapDispatchToProps = (dispatch) => ({
+  storeFetch: (fetchResults) => dispatch({ type: "ADD_SONGS_TRENDING", payload: fetchResults }),
+});
+
+function DiscoverTabContent(props) {
+  const { discover } = props.songs;
   const [tracksForYou, setTracksForYou] = useState([]);
   const [tracksForyouLoaded, setTracksForYouLoaded] = useState(false);
 
@@ -91,4 +99,4 @@ function DiscoverTabContent() {
   );
 }
 
-export default DiscoverTabContent;
+export default connect(mapStateToProps, mapDispatchToProps)(DiscoverTabContent);

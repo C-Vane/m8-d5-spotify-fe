@@ -7,7 +7,7 @@ import currentAlbum from "../reducers/currentAlbum";
 const composedEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const initialState = {
-  songs: { trending: [], podcast: [], moodsAndGenres: [], newReleases: [], discover: [] },
+  songs: { trending: [], podcast: [], moodsAndGenres: [], newRelease: [], discover: [] },
   currentSong: {
     Album: {},
     song: 0,

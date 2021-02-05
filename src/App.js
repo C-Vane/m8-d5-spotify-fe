@@ -2,7 +2,6 @@ import React from "react";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
-
 import Navigation from "./components/Navigation";
 import Home from "./components/Home";
 import Search from "./components/Search";

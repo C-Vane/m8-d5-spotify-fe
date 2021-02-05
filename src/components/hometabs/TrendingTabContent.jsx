@@ -1,9 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import HomeAlbumCard from "../HomeAlbumCard";
 import HomePlaylistAlbumCard from "../HomePlaylistAlbumCard";
 import { Spinner } from "react-bootstrap";
+import { connect } from "react-redux";
 
-function TrendingTabContent() {
+const mapStateToProps = (state) => state;
+
+const mapDispatchToProps = (dispatch) => ({
+  storeFetch: (fetchResults) => dispatch({ type: "ADD_SONGS_TRENDING", payload: fetchResults }),
+});
+
+function TrendingTabContent(props) {
+  const { trending } = props.songs;
   const [popularAlbums, setPopularAlbums] = useState([]);
   const [trendingNow, setTrendingNow] = useState([]);
   const [popularPlaylists, setPopularPlaylists] = useState([]);
@@ -37,18 +45,57 @@ function TrendingTabContent() {
     }
   };
 
-  const start = async () => {
-    setPopularAlbums((await fetchAlbumDataHandler("playlist/3155776842?limit=40")).splice(0, 15));
+  const startNew = async () => {
+    await setPopularAlbums((await fetchAlbumDataHandler("playlist/3155776842?limit=40")).splice(0, 15));
     setPopularAlbumsLoaded(true);
-    setTrendingNow((await fetchAlbumDataHandler("playlist/1111142221?limit=40")).splice(0, 15));
+
+    await setTrendingNow((await fetchAlbumDataHandler("playlist/1111142221?limit=40")).splice(0, 15));
     setTrendingNowLoaded(true);
-    setPopularPlaylists(await fetchAlbumDataHandler("chart"));
+
+    await setPopularPlaylists(await fetchAlbumDataHandler("chart"));
+    setPopularPlaylistsLoaded(true);
+
+    props.storeFetch({ popularAlbums: popularAlbums });
+    props.storeFetch({ trendingNow: trendingNow });
+    props.storeFetch({ popularPlaylists: popularPlaylists });
+  };
+
+  const startFromState = async () => {
+    await setPopularAlbums(trending.popularAlbums);
+    setPopularAlbumsLoaded(true);
+
+    await setTrendingNow(trending.trendingNow);
+    setTrendingNowLoaded(true);
+
+    await setPopularPlaylists(trending.popularPlaylists);
     setPopularPlaylistsLoaded(true);
   };
 
-  React.useEffect(() => {
-    start();
+  useEffect(() => {
+    if (
+      trending.popularPlaylists &&
+      trending.popularAlbums.length !== 0 &&
+      trending.trendingNow.length !== 0 &&
+      trending.popularPlaylists.length !== 0
+    ) {
+      startFromState();
+    } else {
+      startNew();
+    }
   }, []);
+
+  useEffect(() => {
+    if (
+      trending.popularPlaylists &&
+      trending.popularAlbums.length !== 0 &&
+      trending.trendingNow.length !== 0 &&
+      trending.popularPlaylists.length !== 0
+    ) {
+      startFromState();
+    } else {
+      startNew();
+    }
+  }, [props.songs.trending]);
 
   return (
     <div className="tab-pane fade show active" id="trending" role="tabpanel" aria-labelledby="trending-tab">
@@ -114,4 +161,4 @@ function TrendingTabContent() {
   );
 }
 
-export default TrendingTabContent;
+export default connect(mapStateToProps, mapDispatchToProps)(TrendingTabContent);

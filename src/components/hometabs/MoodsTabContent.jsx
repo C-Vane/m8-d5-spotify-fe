@@ -1,8 +1,16 @@
 import React, { useState } from "react";
 import { Spinner } from "react-bootstrap";
 import HomeAlbumCard from "../HomeAlbumCard";
+import { connect } from "react-redux";
 
-function MoodsTabContent() {
+const mapStateToProps = (state) => state;
+
+const mapDispatchToProps = (dispatch) => ({
+  storeFetch: (fetchResults) => dispatch({ type: "ADD_SONGS_TRENDING", payload: fetchResults }),
+});
+
+function MoodsTabContent(props) {
+  const { newReleases } = props.songs;
   const [edmAlbums, setEdmAlbums] = useState([]);
   const [edmAlbumsLoaded, setEdmAlbumsLoaded] = useState(false);
 
@@ -115,4 +123,4 @@ function MoodsTabContent() {
   );
 }
 
-export default MoodsTabContent;
+export default connect(mapStateToProps, mapDispatchToProps)(MoodsTabContent);
