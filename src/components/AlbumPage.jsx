@@ -1,7 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import AlbumPageTrack from "./AlbumPageTrack";
+import { connect } from "react-redux";
 
+const mapStateToProps = (state) => state;
+
+const mapDispatchToProps = (dispatch) => ({
+  saveCurrentSong: (currentSong) =>
+    dispatch({ type: "SET_CURRENT_SONG", payload: currentSong }),
+});
 function AlbumPage(props) {
   const [albumID, setAlbumID] = React.useState(
     props.location.pathname.substr(7, props.location.pathname.length)
@@ -10,8 +17,6 @@ function AlbumPage(props) {
   const [trackList, setTracklist] = React.useState([]);
 
   const fetchAlbumDataHandler = async (endpoint) => {
-    const API_HOST = "deezerdevs-deezer.p.rapidapi.com";
-    const API_KEY = "84d2e1bc2amsh0bcbc81dd32f547p1526bajsncbac98b453bc";
     const API_BASE_URL =
       "https://yabba-dabba-duls-cors-anywhere.herokuapp.com/https://api.deezer.com/";
 
@@ -28,6 +33,10 @@ function AlbumPage(props) {
     }
   };
 
+  const currentSong = {
+    tracks: [...trackList],
+    song: 0,
+  };
   React.useEffect(() => {
     fetchAlbumDataHandler(albumID);
   }, []);
@@ -56,7 +65,12 @@ function AlbumPage(props) {
               {albumData.title && albumData.title}
             </h2>
             <p id="artist-name">{albumData.artist && albumData.artist.name}</p>
-            <button className="btn btn-play mt-4 mb-2">PLAY</button>
+            <button
+              className="btn btn-play mt-4 mb-2"
+              onClick={() => props.saveCurrentSong(currentSong)}
+            >
+              PLAY
+            </button>{" "}
             <p id="num-of-songs"> {albumData && albumData.nb_tracks} Songs </p>
             <div className="mini-buttons mt-4">
               <button className="btn btn-heart">
@@ -74,7 +88,15 @@ function AlbumPage(props) {
               {/*  Generate tracks here  */}
               {trackList.length > 0 &&
                 trackList.map((track, index) => {
-                  return <AlbumPageTrack key={index} track={track} />;
+                  console.log(index);
+                  return (
+                    <AlbumPageTrack
+                      key={index}
+                      index={index}
+                      track={track}
+                      trackList={trackList}
+                    />
+                  );
                 })}
             </div>
           </div>
@@ -84,4 +106,4 @@ function AlbumPage(props) {
   );
 }
 
-export default AlbumPage;
+export default connect(mapStateToProps, mapDispatchToProps)(AlbumPage);
