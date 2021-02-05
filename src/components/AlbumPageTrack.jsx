@@ -1,8 +1,24 @@
 import React from "react";
+import { connect } from "react-redux";
+const mapStateToProps = (state) => state;
 
-function AlbumPageTrack({ track }) {
+const mapDispatchToProps = (dispatch) => ({
+  saveCurrentSong: (currentSong) =>
+    dispatch({ type: "SET_CURRENT_SONG", payload: currentSong }),
+});
+
+function AlbumPageTrack({ track, index, trackList, saveCurrentSong }) {
+  const currentSong = {
+    tracks: [...trackList],
+    song: index,
+  };
+
   return (
-    <div className="track-wrap d-flex justify-content-between align-items-start">
+    <div
+      className="track-wrap d-flex justify-content-between align-items-start"
+      onClick={() => saveCurrentSong(currentSong)}
+    >
+      {/* ONCLICK TO PLAY THE CLICKED SONG */}
       <i className="fas fa-music"></i>
       <div className="track-info">
         <h6 className="mb-1">{track.title}</h6>
@@ -12,5 +28,4 @@ function AlbumPageTrack({ track }) {
     </div>
   );
 }
-
-export default AlbumPageTrack;
+export default connect(mapStateToProps, mapDispatchToProps)(AlbumPageTrack);

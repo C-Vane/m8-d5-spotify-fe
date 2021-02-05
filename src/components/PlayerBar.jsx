@@ -5,7 +5,10 @@ function PlayerBar() {
     <>
       <section id="player">
         <div className="track-nav center">
-          <div id="player-album-info" className="d-flex justify-content-start align-items-center">
+          <div
+            id="player-album-info"
+            className="d-flex justify-content-start align-items-center"
+          >
             <div className="player-cover-img"></div>
             <div className="song-title-info">
               <div id="player-song-name" className="song-title-small">
@@ -35,7 +38,13 @@ function PlayerBar() {
             </div>
             <div className="controls d-flex align-items-center">
               <div className="track-time-current">00:00</div>
-              <input id="player-duration-bar" className="level" type="range" min="0" max="100" />
+              <input
+                id="player-duration-bar"
+                className="level"
+                type="range"
+                min="0"
+                max="100"
+              />
               <div className="track-time-to-finish">00:30</div>
             </div>
           </div>
