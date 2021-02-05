@@ -24,6 +24,7 @@ const initialState = {
     account: { name: "", email: "", password: "" },
     liked: [],
     playlists: [],
+    artists: [],
   },
 };
 

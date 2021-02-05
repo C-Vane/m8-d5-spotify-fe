@@ -107,10 +107,10 @@ function ArtistPage(props) {
         <div className='album-wrapper d-flex flex-column flex-lg-row align-items-start align-items-lg-center' className={page === 1 ? "d-block" : "d-none"}>
           <div className='container albums-container'>
             <h2>Top Tracks</h2>
-            <div id='artist-album-row' className='row mb-4'>
+            <div className='row mb-4'>
               {/* Generate cards here  */}
               <div className='right-wrapper col d-flex flex-column justify-content-center align-items-start mt-5' style={{ height: "50vh", overflowY: "scroll" }}>
-                <div id='track-row' className='w-100 mt-5'>
+                <div id='tracklist-page' className='w-100 mt-5'>
                   {trackList && trackList.length > 0 && trackList.map((track, index) => <TrackList key={index} index={index} allTracks={trackList} track={track} />)}
                 </div>
               </div>
