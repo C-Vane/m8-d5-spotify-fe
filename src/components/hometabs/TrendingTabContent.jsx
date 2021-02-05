@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import HomeAlbumCard from "../HomeAlbumCard";
 import HomePlaylistAlbumCard from "../HomePlaylistAlbumCard";
-import { Alert, Spinner, Col } from "react-bootstrap";
+import { Spinner } from "react-bootstrap";
 
 function TrendingTabContent() {
   const [popularAlbums, setPopularAlbums] = useState([]);
@@ -38,9 +38,9 @@ function TrendingTabContent() {
   };
 
   const start = async () => {
-    setPopularAlbums((await fetchAlbumDataHandler("playlist/3155776842")).splice(0, 15));
+    setPopularAlbums((await fetchAlbumDataHandler("playlist/3155776842?limit=40")).splice(0, 15));
     setPopularAlbumsLoaded(true);
-    setTrendingNow((await fetchAlbumDataHandler("playlist/1111142221")).splice(0, 15));
+    setTrendingNow((await fetchAlbumDataHandler("playlist/1111142221?limit=40")).splice(0, 15));
     setTrendingNowLoaded(true);
     setPopularPlaylists(await fetchAlbumDataHandler("chart"));
     setPopularPlaylistsLoaded(true);
