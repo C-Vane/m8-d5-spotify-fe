@@ -8,20 +8,22 @@ import Search from "./components/Search";
 import YourLibrary from "./components/YourLibrary";
 import AlbumPage from "./components/AlbumPage";
 import PlayerBar from "./components/PlayerBar";
+import SignInPage from "./components/SingInPage";
 import ArtistPage from "./components/ArtistPage";
 
 function App() {
   return (
     <Router>
-      <Redirect to='/home' />
-      <Route path='/' component={Navigation} />
-      <Route path='/' exact component={Home} />
-      <Route path='/home' component={Home} />
-      <Route path='/search' exact component={Search} />
-      <Route path='/library' component={YourLibrary} />
-      <Route path='/album/' component={AlbumPage} />
-      <Route path='/' component={PlayerBar} />
-      <Route path='/artist/:id' component={ArtistPage} />
+      <Route path="/login" exact component={SignInPage} />
+      {/* <Redirect to="/home" /> */}
+      <Route path="/" component={Navigation} />
+      <Route path="/" exact component={Home} />
+      <Route path="/home" component={Home} />
+      <Route path="/search" exact component={Search} />
+      <Route path="/library" component={YourLibrary} />
+      <Route path="/album/" component={AlbumPage} />
+      <Route path="/artist/:id" component={ArtistPage} />
+      <Route path="/" component={PlayerBar} />
     </Router>
   );
 }
