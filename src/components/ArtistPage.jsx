@@ -118,7 +118,7 @@ function ArtistPage(props) {
             <h2>Albums</h2>
             <div id='artist-album-row' className='row'>
               {/* Generate cards here  */}
-              {albums && albums.length > 1 && albums.map((album, index) => <HomeAlbumCard key={index} album={album} />)}
+              {albums && albums.length > 1 && albums.map((album, index) => <HomeAlbumCard key={index} album={{ album: album }} />)}
             </div>
             <div className='container albums-container'>
               <h2>Related Artists</h2>
