@@ -10,9 +10,9 @@ function PlayerBar(props) {
           <div id="player-album-info" className="d-flex justify-content-start align-items-center">
             <div
               className="player-cover-img"
-              /*   style={{
-                backgroundImage: `url(${props.currentSong.tracks[props.currentSong.song].picture})`,
-              }} */
+              style={{
+                backgroundImage: `url(${props.currentSong.cover /* || "http://placecorgi.com/260/180" */})`,
+              }}
             ></div>
             <div className="song-title-info">
               <div id="player-song-name" className="song-title-small">

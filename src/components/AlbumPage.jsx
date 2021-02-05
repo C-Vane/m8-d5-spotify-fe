@@ -34,6 +34,7 @@ function AlbumPage(props) {
   };
 
   const currentSong = {
+    cover: albumData.cover_medium,
     tracks: [...trackList],
     song: 0,
   };
@@ -94,6 +95,7 @@ function AlbumPage(props) {
                       index={index}
                       track={track}
                       trackList={trackList}
+                      cover={albumData.cover_medium}
                     />
                   );
                 })}
