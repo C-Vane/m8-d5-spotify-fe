@@ -9,18 +9,21 @@ import Search from "./components/Search";
 import YourLibrary from "./components/YourLibrary";
 import AlbumPage from "./components/AlbumPage";
 import PlayerBar from "./components/PlayerBar";
+import SingInPage from "./components/SingInPage";
 
 function App() {
   return (
     <Router>
-      <Redirect to="/home" />
+      {/* <Redirect to="/home" />
       <Route path="/" component={Navigation} />
       <Route path="/" exact component={Home} />
       <Route path="/home" component={Home} />
       <Route path="/search" exact component={Search} />
       <Route path="/library" component={YourLibrary} />
       <Route path="/album/" component={AlbumPage} />
-      <Route path="/" component={PlayerBar} />
+      <Route path="/" component={AlbumPage} />
+      <Route path="/" component={PlayerBar} /> */}
+      <SingInPage />
     </Router>
   );
 }

@@ -1,9 +1,12 @@
 @font-face {
   font-family: "Circular";
   src: url("https://www.bu.edu/cdn/fonts/Circular/Circular-Bold.eot");
-  src: url("https://www.bu.edu/cdn/fonts/Circular/Circular-Bold.eot?#iefix") format("embedded-opentype"),
-    url("https://www.bu.edu/cdn/fonts/Circular/Circular-Bold.woff") format("woff"),
-    url("https://www.bu.edu/cdn/fonts/Circular/Circular-Bold.ttf") format("truetype");
+  src: url("https://www.bu.edu/cdn/fonts/Circular/Circular-Bold.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://www.bu.edu/cdn/fonts/Circular/Circular-Bold.woff")
+      format("woff"),
+    url("https://www.bu.edu/cdn/fonts/Circular/Circular-Bold.ttf")
+      format("truetype");
   font-style: normal;
   font-weight: 700;
 }
@@ -15,7 +18,75 @@ body {
   min-height: 100vh;
   height: 100%;
 }
+/*****************************************************/
 
+/* SIGN IN STYLING */
+.container_sign_in {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  overflow: scroll;
+}
+
+.main_sing_in {
+  max-width: 35vw;
+  height: fit-content;
+}
+
+.sign_logo {
+  height: 20vh;
+}
+
+#sing_in_with_fb {
+  background: rgb(58, 88, 151);
+  color: rgb(255, 255, 255);
+  height: 50px;
+}
+
+#sing_in_with_fb:hover {
+  background: #6b82b1;
+}
+#sing_in {
+  background: rgb(29, 185, 84);
+  color: rgb(255, 255, 255);
+  height: 50px;
+}
+
+#sing_in:hover {
+  background: rgb(30, 215, 96);
+}
+.sign_title {
+  color: #000 !important;
+}
+
+.hrs {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hr {
+  height: 1px;
+  border: 1px solid lightgrey;
+  width: 120px;
+}
+
+.my_checkbox {
+  display: flex;
+}
+
+#formBasicCheckbox {
+  display: flex;
+}
+
+g {
+  color: rgb(29, 185, 84);
+  text-decoration: underline;
+  cursor: pointer;
+}
 /*********** NAVIGATION STYLING ***********/
 
 #navigation {
@@ -243,27 +314,57 @@ aside {
 
 .trending-bg {
   background-color: #04487c;
-  background-image: linear-gradient(180deg, #04487c 0%, #305494 21%, #010e17 58%, #010e17 100%);
+  background-image: linear-gradient(
+    180deg,
+    #04487c 0%,
+    #305494 21%,
+    #010e17 58%,
+    #010e17 100%
+  );
 }
 
 .podcast-bg {
   background-color: #7c4c04;
-  background-image: linear-gradient(180deg, #7c4c04 0%, #946c30 21%, #171101 58%, #171001 100%);
+  background-image: linear-gradient(
+    180deg,
+    #7c4c04 0%,
+    #946c30 21%,
+    #171101 58%,
+    #171001 100%
+  );
 }
 
 .moodsandgenres-bg {
   background-color: #047c72;
-  background-image: linear-gradient(180deg, #047c72 0%, #30947e 21%, #011710 58%, #011710 100%);
+  background-image: linear-gradient(
+    180deg,
+    #047c72 0%,
+    #30947e 21%,
+    #011710 58%,
+    #011710 100%
+  );
 }
 
 .newreleases-bg {
   background-color: #60047c;
-  background-image: linear-gradient(180deg, #60047c 0%, #6c3094 21%, #100117 58%, #100117 100%);
+  background-image: linear-gradient(
+    180deg,
+    #60047c 0%,
+    #6c3094 21%,
+    #100117 58%,
+    #100117 100%
+  );
 }
 
 .discover-bg {
   background-color: #1c7c04;
-  background-image: linear-gradient(180deg, #1c7c04 0%, #4c9430 21%, #0a1701 58%, #091701 100%);
+  background-image: linear-gradient(
+    180deg,
+    #1c7c04 0%,
+    #4c9430 21%,
+    #0a1701 58%,
+    #091701 100%
+  );
 }
 
 .content-wrapper {
@@ -509,7 +610,11 @@ aside#search {
   right: 0;
   left: 0;
   bottom: 0;
-  background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.4) 10%, rgba(0, 0, 0, 0) 100%);
+  background-image: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.4) 10%,
+    rgba(0, 0, 0, 0) 100%
+  );
   z-index: -1;
 }
 
@@ -866,7 +971,8 @@ aside#tracklist-page {
   width: 100%;
   position: relative;
   padding: 10px 20px;
-  transition: background-color 0.25s ease, padding 0.25s ease-in-out, transform 0.25s ease-in-out;
+  transition: background-color 0.25s ease, padding 0.25s ease-in-out,
+    transform 0.25s ease-in-out;
   border-radius: 12px;
 }
 
@@ -948,7 +1054,8 @@ aside#tracklist-page {
 /*********** ANIMATIONS ***********/
 
 .flip-in-hor-bottom {
-  -webkit-animation: flip-in-hor-bottom 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  -webkit-animation: flip-in-hor-bottom 0.5s
+    cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
   animation: flip-in-hor-bottom 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 
@@ -978,8 +1085,10 @@ aside#tracklist-page {
 }
 
 .swing-in-top-fwd {
-  -webkit-animation: swing-in-top-fwd 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.2s both;
-  animation: swing-in-top-fwd 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.2s both;
+  -webkit-animation: swing-in-top-fwd 0.5s
+    cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.2s both;
+  animation: swing-in-top-fwd 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.2s
+    both;
 }
 
 @-webkit-keyframes swing-in-top-fwd {
@@ -1016,8 +1125,10 @@ aside#tracklist-page {
 }
 
 .swing-in-top-fwd-dly {
-  -webkit-animation: swing-in-top-fwd 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.5s both;
-  animation: swing-in-top-fwd 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.5s both;
+  -webkit-animation: swing-in-top-fwd 0.5s
+    cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.5s both;
+  animation: swing-in-top-fwd 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.5s
+    both;
 }
 
 @-webkit-keyframes swing-in-top-fwd-dly {
@@ -1076,7 +1187,8 @@ aside#tracklist-page {
 }
 
 .flip-out-hor-top {
-  -webkit-animation: flip-out-hor-top 0.45s cubic-bezier(0.55, 0.085, 0.68, 0.53) both;
+  -webkit-animation: flip-out-hor-top 0.45s
+    cubic-bezier(0.55, 0.085, 0.68, 0.53) both;
   animation: flip-out-hor-top 0.45s cubic-bezier(0.55, 0.085, 0.68, 0.53) both;
 }
 
