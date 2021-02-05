@@ -3,25 +3,24 @@ import { Link } from "react-router-dom";
 import AlbumPageTrack from "./AlbumPageTrack";
 
 function AlbumPage(props) {
-  const [albumID, setAlbumID] = React.useState(props.location.pathname.substr(7, props.location.pathname.length));
+  const [albumID, setAlbumID] = React.useState(
+    props.location.pathname.substr(7, props.location.pathname.length)
+  );
   const [albumData, setAlbumData] = React.useState({});
   const [trackList, setTracklist] = React.useState([]);
 
   const fetchAlbumDataHandler = async (endpoint) => {
     const API_HOST = "deezerdevs-deezer.p.rapidapi.com";
     const API_KEY = "84d2e1bc2amsh0bcbc81dd32f547p1526bajsncbac98b453bc";
-    const API_BASE_URL = "https://rapidapi.p.rapidapi.com";
+    const API_BASE_URL =
+      "https://yabba-dabba-duls-cors-anywhere.herokuapp.com/https://api.deezer.com/";
 
     try {
       const response = await fetch(`${API_BASE_URL}/album/${endpoint}`, {
         method: "GET",
-        headers: {
-          "x-rapidapi-key": API_KEY,
-          "x-rapidapi-host": API_HOST,
-        },
       });
-
       const data = await response.json();
+      console.log("try fetch", data);
       setAlbumData(data);
       setTracklist(data.tracks.data);
     } catch (e) {
@@ -34,7 +33,10 @@ function AlbumPage(props) {
   }, []);
 
   return (
-    <aside id="tracklist-page" className="d-flex justify-content-center align-items-center">
+    <aside
+      id="tracklist-page"
+      className="d-flex justify-content-center align-items-center"
+    >
       <div id="tracklist-container" className="w-100">
         <Link to="/home">
           <button id="back-button">
@@ -62,7 +64,9 @@ function AlbumPage(props) {
               </button>
               <button className="btn btn-more">...</button>
             </div>
-            <div className="added-to-album d-none mt-3 swing-in-top-fwd ">Album added to your library.</div>
+            <div className="added-to-album d-none mt-3 swing-in-top-fwd ">
+              Album added to your library.
+            </div>
             <p className="albumid"></p>
           </div>
           <div className="right-wrapper col-6  d-flex flex-column justify-content-center align-items-start">
