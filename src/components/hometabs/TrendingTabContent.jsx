@@ -95,7 +95,7 @@ function TrendingTabContent(props) {
     } else {
       startNew();
     }
-  }, [props.songs.trending]);
+  }, [trending]);
 
   return (
     <div className="tab-pane fade show active" id="trending" role="tabpanel" aria-labelledby="trending-tab">

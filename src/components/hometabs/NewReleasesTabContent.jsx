@@ -65,7 +65,7 @@ function NewReleasesTabContent(props) {
     } else {
       startNew();
     }
-  }, [props.songs.newRelease]);
+  }, [newRelease]);
 
   return (
     <div className="tab-pane fade show active" id="new-releases" role="tabpanel" aria-labelledby="new-releases-tab">

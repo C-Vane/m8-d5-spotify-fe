@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Spinner } from "react-bootstrap";
 import HomeAlbumCard from "../HomeAlbumCard";
 import { connect } from "react-redux";
@@ -6,11 +6,11 @@ import { connect } from "react-redux";
 const mapStateToProps = (state) => state;
 
 const mapDispatchToProps = (dispatch) => ({
-  storeFetch: (fetchResults) => dispatch({ type: "ADD_SONGS_TRENDING", payload: fetchResults }),
+  storeFetch: (fetchResults) => dispatch({ type: "ADD_SONGS_MOODS", payload: fetchResults }),
 });
 
 function MoodsTabContent(props) {
-  const { newReleases } = props.songs;
+  const { moodsAndGenres } = props.songs;
   const [edmAlbums, setEdmAlbums] = useState([]);
   const [edmAlbumsLoaded, setEdmAlbumsLoaded] = useState(false);
 
@@ -45,18 +45,53 @@ function MoodsTabContent(props) {
     }
   };
 
-  const start = async () => {
+  const startNew = async () => {
     setEdmAlbums((await fetchAlbumDataHandler("playlist/4503899902?limit=30")).splice(0, 10));
     setEdmAlbumsLoaded(true);
     setWorkoutAlbums((await fetchAlbumDataHandler("playlist/1857061922?limit=30")).splice(0, 10));
     setWorkoutAlbumsLoaded(true);
     setChillAlbums((await fetchAlbumDataHandler("playlist/3338949242?limit=30")).splice(0, 10));
     setChillAlbumsLoaded(true);
+
+    props.storeFetch({ edmAlbums: edmAlbums });
+    props.storeFetch({ workoutAlbums: workoutAlbums });
+    props.storeFetch({ chillAlbums: chillAlbums });
+  };
+
+  const startFromState = async () => {
+    setEdmAlbums(moodsAndGenres.edmAlbums);
+    setEdmAlbumsLoaded(true);
+    setWorkoutAlbums(moodsAndGenres.workoutAlbums);
+    setWorkoutAlbumsLoaded(true);
+    setChillAlbums(moodsAndGenres.chillAlbums);
+    setChillAlbumsLoaded(true);
   };
 
   React.useEffect(() => {
-    start();
+    if (
+      moodsAndGenres.edmAlbums &&
+      moodsAndGenres.edmAlbums.length !== 0 &&
+      moodsAndGenres.workoutAlbums.length !== 0 &&
+      moodsAndGenres.chillAlbums.length !== 0
+    ) {
+      startFromState();
+    } else {
+      startNew();
+    }
   }, []);
+
+  useEffect(() => {
+    if (
+      moodsAndGenres.edmAlbums &&
+      moodsAndGenres.edmAlbums.length !== 0 &&
+      moodsAndGenres.workoutAlbums.length !== 0 &&
+      moodsAndGenres.chillAlbums.length !== 0
+    ) {
+      startFromState();
+    } else {
+      startNew();
+    }
+  }, [moodsAndGenres]);
 
   return (
     <div

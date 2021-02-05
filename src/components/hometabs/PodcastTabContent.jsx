@@ -33,19 +33,19 @@ function PodcastTabContent(props) {
   };
 
   const startNew = async () => {
-    setTopPodcasts((await fetchAlbumDataHandler("chart")).splice(0, 15));
+    await setTopPodcasts((await fetchAlbumDataHandler("chart")).splice(0, 15));
     setTopPodcastsLoaded(true);
 
     props.storeFetch(topPodcasts);
   };
 
   const startFromState = async () => {
-    await setTopPodcasts(podcast.popularAlbums);
+    await setTopPodcasts(podcast);
     setTopPodcastsLoaded(true);
   };
 
   useEffect(() => {
-    if (podcast.topPodcasts && podcast.topPodcasts.length !== 0) {
+    if (podcast && podcast.length !== 0) {
       startFromState();
     } else {
       startNew();
@@ -53,12 +53,12 @@ function PodcastTabContent(props) {
   }, []);
 
   useEffect(() => {
-    if (podcast.topPodcasts && podcast.topPodcasts.length !== 0) {
+    if (podcast && podcast.length !== 0) {
       startFromState();
     } else {
       startNew();
     }
-  }, [props.songs.podcast]);
+  }, [podcast]);
 
   return (
     <div className="tab-pane fade show active" id="podcast" role="tabpanel" aria-labelledby="podcast-tab">

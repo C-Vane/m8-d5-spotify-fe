@@ -5,7 +5,7 @@ export default function (state = {}, action) {
     case "ADD_SONGS_PODCAST":
       return { ...state, podcast: action.payload };
     case "ADD_SONGS_MOODS":
-      return { ...state, moodsAndGenres: action.payload };
+      return { ...state, moodsAndGenres: { ...state.moodsAndGenres, ...action.payload } };
     case "ADD_SONGS_NEW":
       return { ...state, newRelease: action.payload };
     case "ADD_SONGS_DISCOVER":
