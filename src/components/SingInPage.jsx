@@ -14,7 +14,7 @@ function SingInPage() {
         </div>
         <span>
           <h3 className="text-center sign_title mb-4">
-            Sing un for free to start listening.
+            Sing up for free to start listening.
           </h3>
         </span>
         <button id="sing_in_with_fb" href="#" className="col-12">
