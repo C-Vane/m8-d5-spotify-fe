@@ -9,7 +9,11 @@ function HomeAlbumCard({ album }) {
         <div className="album-card">
           <img src={album.album.cover_medium} className="img-fluid" alt="album-art" />
           <h5>{album.album.title}</h5>
-          <p>{album.artist.name}</p>
+          {album.artist && (
+            <Link to={"/artist/" + album.artist.id}>
+              <p>{album.artist.name}</p>
+            </Link>
+          )}
         </div>
       </Link>
     </Col>
