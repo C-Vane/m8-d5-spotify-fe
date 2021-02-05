@@ -7,9 +7,15 @@ import currentAlbum from "../reducers/currentAlbum";
 const composedEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const initialState = {
-  songs: { trending: [], podcast: [], moodsAndGenres: [], newRelease: [], discover: [] },
+  songs: {
+    trending: [],
+    podcast: [],
+    moodsAndGenres: [],
+    newRelease: [],
+    discover: [],
+  },
   currentSong: {
-    Album: {},
+    tracks: [],
     song: 0,
   },
   currentAlbum: {},
@@ -20,7 +26,12 @@ const initialState = {
   },
 };
 
-const rootReducer = combineReducers({ songs: songs, currentAlbum: currentAlbum, currentSong: currentSong, user: user });
+const rootReducer = combineReducers({
+  songs: songs,
+  currentAlbum: currentAlbum,
+  currentSong: currentSong,
+  user: user,
+});
 export default function configureStore() {
   return createStore(rootReducer, initialState, composedEnhancer(applyMiddleware(thunk)));
 }
