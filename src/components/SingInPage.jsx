@@ -8,7 +8,7 @@ const mapDispatchToProps = (dispatch) => ({
   addUserHandler: (user) => dispatch({ type: "SET_USER", payload: user }),
 });
 
-function SingInPage(props) {
+function SingInPage({ addUserHandler }) {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
@@ -23,7 +23,6 @@ function SingInPage(props) {
     setPassword(e.target.value);
   };
 
-  console.log(props);
   return (
     <div className="container_sign_in">
       <Col className="main_sing_in pt-3">
@@ -50,7 +49,14 @@ function SingInPage(props) {
         <div className="text-center mt-3 mb-3">
           Sing up with your email address
         </div>
-        <Form>
+        <Form
+          onSubmit={(e) =>
+            addUserHandler(
+              { name: name, email: email, password: password },
+              e.preventDefault()
+            )
+          }
+        >
           <Form.Group controlId="formBasicEmail">
             <Form.Label>What's your email?</Form.Label>
             <Form.Control
