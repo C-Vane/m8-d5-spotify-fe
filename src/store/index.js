@@ -3,6 +3,7 @@ import songs from "../reducers/songs";
 import currentSong from "../reducers/currentSong";
 import user from "../reducers/user";
 import thunk from "redux-thunk";
+import currentAlbum from "../reducers/currentAlbum";
 const composedEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const initialState = {
@@ -11,6 +12,7 @@ const initialState = {
     Album: {},
     song: 0,
   },
+  currentAlbum: {},
   user: {
     account: { name: "", email: "", password: "" },
     liked: [],
@@ -18,7 +20,7 @@ const initialState = {
   },
 };
 
-const rootReducer = combineReducers({ songs: songs, currentSong: currentSong, user: user });
+const rootReducer = combineReducers({ songs: songs, currentAlbum: currentAlbum, currentSong: currentSong, user: user });
 export default function configureStore() {
   return createStore(rootReducer, initialState, composedEnhancer(applyMiddleware(thunk)));
 }
