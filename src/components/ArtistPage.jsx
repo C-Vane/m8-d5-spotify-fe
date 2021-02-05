@@ -1,12 +1,16 @@
 import React from "react";
 import TrackList from "./TrackList";
 import HomeAlbumCard from "./HomeAlbumCard";
+import ArtistCard from "./ArtistCard";
 
 function ArtistPage(props) {
   const [artistID, setArtistID] = React.useState(props.match.params.id);
   const [artistData, setArtistData] = React.useState({});
+  const [relatedArtists, setRelatedArtists] = React.useState([]);
   const [trackList, setTracklist] = React.useState([]);
   const [albums, setAlbums] = React.useState([]);
+  const [page, setPage] = React.useState(2);
+
   const fetchArtistDataHandler = async (endpoint) => {
     const API_HOST = "deezerdevs-deezer.p.rapidapi.com";
     const API_KEY = "84d2e1bc2amsh0bcbc81dd32f547p1526bajsncbac98b453bc";
@@ -29,8 +33,10 @@ function ArtistPage(props) {
             "x-rapidapi-host": API_HOST,
           },
         });
-        const trackList = await responseTracks.json();
-
+        if (responseTracks.ok) {
+          const trackList = await responseTracks.json();
+          setTracklist(trackList.data);
+        }
         const responseAlbums = await fetch(`${API_BASE_URL}/artist/${endpoint}/albums`, {
           method: "GET",
           headers: {
@@ -38,11 +44,23 @@ function ArtistPage(props) {
             "x-rapidapi-host": API_HOST,
           },
         });
-        const albums = await responseAlbums.json();
-        setAlbums(albums.data);
-        console.log(albums.data);
-        setTracklist(trackList.data);
-        console.log(trackList);
+        if (responseAlbums.ok) {
+          const albums = await responseAlbums.json();
+          setAlbums(albums.data);
+        }
+
+        const relatedArtists = await fetch(`${API_BASE_URL}/artist/${endpoint}/related`, {
+          method: "GET",
+          headers: {
+            "x-rapidapi-key": API_KEY,
+            "x-rapidapi-host": API_HOST,
+          },
+        });
+        if (relatedArtists.ok) {
+          const related = await relatedArtists.json();
+          setRelatedArtists(related.data);
+        }
+
         setArtistData(data);
       }
     } catch (e) {
@@ -50,6 +68,7 @@ function ArtistPage(props) {
     }
   };
   const playMusic = () => {};
+
   React.useEffect(() => {
     fetchArtistDataHandler(artistID);
   }, []);
@@ -68,19 +87,25 @@ function ArtistPage(props) {
         </div>
         <div className='container artist-links mt-5'>
           <ul>
-            <li className='first-li'>OVERVIEW</li>
-            <li>RELATED ARTISTS</li>
-            <li>ABOUT</li>
+            <li className={page === 1 ? "first-li" : ""} onClick={() => setPage(1)}>
+              OVERVIEW
+            </li>
+            <li className={page === 2 ? "first-li" : ""} onKeyDown={() => console.log(2)}>
+              RELATED ARTISTS
+            </li>
+            <li className={page === 3 ? "first-li" : ""} onClick={() => setPage(3)}>
+              ABOUT
+            </li>
           </ul>
         </div>
-        <div className='album-wrapper d-flex flex-column flex-lg-row align-items-start align-items-lg-center'>
+        <div className='album-wrapper d-flex flex-column flex-lg-row align-items-start align-items-lg-center' className={page === 1 ? "d-block" : "d-none"}>
           <div className='container albums-container'>
             <h2>Top Tracks</h2>
-            <div id='artist-album-row' className='row'>
+            <div id='artist-album-row' className='row mb-4'>
               {/* Generate cards here  */}
-              <div className='right-wrapper col d-flex flex-column justify-content-center align-items-start' style={{ height: "50vh", overflowY: "scroll" }}>
-                <div id='track-row' className='w-100 mt-3'>
-                  {trackList.length > 0 && trackList.map((track, index) => <TrackList key={index} track={track} />)}
+              <div className='right-wrapper col d-flex flex-column justify-content-center align-items-start mt-5' style={{ height: "50vh", overflowY: "scroll" }}>
+                <div id='track-row' className='w-100 mt-5'>
+                  {trackList.length > 0 && trackList.map((track, index) => <TrackList key={index} index={index} allTracks={trackList} track={track} />)}
                 </div>
               </div>
             </div>
@@ -91,6 +116,18 @@ function ArtistPage(props) {
             </div>
           </div>
         </div>
+        <div className='album-wrapper d-flex flex-column flex-lg-row align-items-start align-items-lg-center' className={page === 2 ? "d-block" : "d-none"}>
+          <div className='container albums-container'>
+            <h2>Related Artists</h2>
+            <div id='artist-album-row' className='row mb-4'>
+              {/* Generate cards here  */}
+              <div className='right-wrapper col d-flex flex-column justify-content-center align-items-start mt-5'>
+                <div className='w-100 mt-5 row'>{relatedArtists.length > 0 && relatedArtists.map((artist, index) => <ArtistCard artist={artist} key={index} />)}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className='album-wrapper d-flex flex-column flex-lg-row align-items-start align-items-lg-center' className={page === 3 ? "d-block" : "d-none"}></div>
       </div>
     </aside>
   );
