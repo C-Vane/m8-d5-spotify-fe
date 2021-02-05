@@ -14,8 +14,8 @@ import ArtistPage from "./components/ArtistPage";
 function App() {
   return (
     <Router>
-      <Route path="/login" exact component={SignInPage} />
-      {/* <Redirect to="/home" /> */}
+      {/* <Route path="/login" exact component={SignInPage} /> */}
+      <Redirect to="/home" />
       <Route path="/" component={Navigation} />
       <Route path="/" exact component={Home} />
       <Route path="/home" component={Home} />
