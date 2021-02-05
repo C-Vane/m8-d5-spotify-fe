@@ -1,6 +1,12 @@
 import React from "react";
-
-function PlayerBar() {
+import { connect } from "react-redux";
+const mapStateToProps = (state) => state;
+function PlayerBar(props) {
+  console.log(
+    "theSOng is this",
+    props.currentSong.tracks[props.currentSong.song]
+  );
+  /*   if (props.currentSong.tracks[props.currentSong.song]){}else{} */
   return (
     <>
       <section id="player">
@@ -9,13 +15,24 @@ function PlayerBar() {
             id="player-album-info"
             className="d-flex justify-content-start align-items-center"
           >
-            <div className="player-cover-img"></div>
+            <div
+              className="player-cover-img"
+              style={{
+                backgroundImage: `url(${
+                  props.currentSong.tracks[props.currentSong.song].title
+                })`,
+              }}
+            ></div>
             <div className="song-title-info">
               <div id="player-song-name" className="song-title-small">
-                Really Love (feat. Craig Da...)
+                {props.currentSong.tracks[props.currentSong.song]
+                  ? props.currentSong.tracks[props.currentSong.song].title
+                  : "Really Love (feat. Craig Da...)"}
               </div>
               <div id="player-artist-name" className="song-artist-small artist">
-                Ksi, Craig David, Digital Farm Animals
+                {props.currentSong.tracks[props.currentSong.song]
+                  ? props.currentSong.tracks[props.currentSong.song].artist.name
+                  : "Ksi, Craig David, Digital Farm Animals"}
               </div>
             </div>
           </div>
@@ -58,4 +75,4 @@ function PlayerBar() {
   );
 }
 
-export default PlayerBar;
+export default connect(mapStateToProps)(PlayerBar);

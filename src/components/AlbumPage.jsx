@@ -88,7 +88,6 @@ function AlbumPage(props) {
               {/*  Generate tracks here  */}
               {trackList.length > 0 &&
                 trackList.map((track, index) => {
-                  console.log(index);
                   return (
                     <AlbumPageTrack
                       key={index}
