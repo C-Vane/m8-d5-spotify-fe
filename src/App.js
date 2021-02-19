@@ -15,16 +15,15 @@ import LogIn from "./components/LogIn";
 function App() {
   return (
     <Router>
-      <Route path="/login" exact component={LogIn} />
-      <Route path="/signup" exact component={SignInPage} />
-      <Route path="/" component={Navigation} />
-      <Route path="/" exact component={Home} />
-      <Route path="/home" component={Home} />
-      <Route path="/search" exact component={Search} />
-      <Route path="/library" component={YourLibrary} />
-      <Route path="/album/" component={AlbumPage} />
-      <Route path="/artist/:id" component={ArtistPage} />
-      <Route path="/" component={PlayerBar} />
+      <Route path='/login' exact component={LogIn} />
+      <Route path='/signup' exact component={SignInPage} />
+      <Route path='/' component={Navigation} />
+      <Route path='/home' exact component={Home} />
+      <Route path='/search' exact component={Search} />
+      <Route path='/library' exact component={YourLibrary} />
+      <Route path='/album/' component={AlbumPage} />
+      <Route path='/artist/:id' component={ArtistPage} />
+      <Route path='/' component={PlayerBar} />
     </Router>
   );
 }
