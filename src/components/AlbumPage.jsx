@@ -14,18 +14,20 @@ function AlbumPage(props) {
   const [albumID, setAlbumID] = React.useState(props.location.pathname.substr(7, props.location.pathname.length));
   const [albumData, setAlbumData] = React.useState({});
   const [trackList, setTracklist] = React.useState([]);
-  console.log(props);
-  const fetchAlbumDataHandler = async (endpoint) => {
-    const API_BASE_URL = "https://yabba-dabba-duls-cors-anywhere.herokuapp.com/https://api.deezer.com/";
 
+  const fetchAlbumDataHandler = async (endp) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/album/${endpoint}`, {
-        method: "GET",
-      });
-      const data = await response.json();
-      console.log("try fetch", data);
-      setAlbumData(data);
-      setTracklist(data.tracks.data);
+      const response = await fetch(process.env.REACT_APP_BE_URL + "/music/album?query=" + endp);
+      console.log(response);
+      if (response.ok) {
+        const data = await response.json();
+        if (data) {
+          setAlbumData(data);
+          setTracklist(data.tracks.data);
+        }
+      } else {
+        alert("There was an error when fetching");
+      }
     } catch (e) {
       console.error(`API ERROR : ${e.message}`);
     }

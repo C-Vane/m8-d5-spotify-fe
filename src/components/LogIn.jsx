@@ -11,7 +11,7 @@ const mapDispatchToProps = (dispatch) => ({
   addUserHandler: (user) => dispatch({ type: "SET_USER", payload: user }),
 });
 
-function LogIn({ addUserHandler }, props) {
+function LogIn(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -20,20 +20,15 @@ function LogIn({ addUserHandler }, props) {
   const loginFetch = async (e) => {
     e.preventDefault();
     try {
-      let response = await fetch("URL", {
+      let response = await fetch(process.env.REACT_APP_BE_URL + "/users/login", {
         method: "POST",
         body: JSON.stringify({ email: email, password: password }),
         headers: {
           "Content-Type": "application/json",
         },
       });
-      let resp = await response.json();
-      if (resp.access) {
-        localStorage.setItem("accessToken", resp.access);
-        localStorage.setItem("refreshToken", resp.refresh);
-        props.history.push("/home");
-      }
-      console.log(resp);
+      console.log(props);
+      if (response.ok) props.history.push("/home");
     } catch (error) {
       console.log(error);
     }
@@ -92,7 +87,7 @@ function LogIn({ addUserHandler }, props) {
             Submit
           </Button> */}
           <button id='sing_in' href='/login.html' className='col-12 mt-2' type='submit'>
-            SIGN UP
+            LOG IN
           </button>
 
           <div className='text-center mb-3'>

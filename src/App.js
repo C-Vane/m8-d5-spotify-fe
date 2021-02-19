@@ -18,7 +18,7 @@ function App() {
       <Route path='/login' exact component={LogIn} />
       <Route path='/signup' exact component={SignInPage} />
       <Route path='/' component={Navigation} />
-      <Route path='/home' exact component={Home} />
+      <Route path='/home' component={Home} />
       <Route path='/search' exact component={Search} />
       <Route path='/library' exact component={YourLibrary} />
       <Route path='/album/' component={AlbumPage} />
