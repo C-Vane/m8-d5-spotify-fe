@@ -10,12 +10,13 @@ import AlbumPage from "./components/AlbumPage";
 import PlayerBar from "./components/PlayerBar";
 import SignInPage from "./components/SingInPage";
 import ArtistPage from "./components/ArtistPage";
+import LogIn from "./components/LogIn";
 
 function App() {
   return (
     <Router>
-      {/* <Route path="/login" exact component={SignInPage} /> */}
-      <Redirect to="/home" />
+      <Route path="/login" exact component={LogIn} />
+      <Route path="/signup" exact component={SignInPage} />
       <Route path="/" component={Navigation} />
       <Route path="/" exact component={Home} />
       <Route path="/home" component={Home} />
