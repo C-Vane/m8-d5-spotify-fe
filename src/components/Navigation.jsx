@@ -1,35 +1,47 @@
-/** @format */
-
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button, Col } from "react-bootstrap";
 import { getFunction, postFunction } from "./CRUDFunction";
+import { connect } from "react-redux";
 
-function Navigation() {
+const fetchUser = async () => {
+  const user = await getFunction("/users/me");
+  if (user._id) return user;
+};
+
+const mapStateToProps = (state) => state;
+
+const mapDispatchToProps = (dispatch) => ({
+  saveUser: async () => {
+    const user = await fetchUser();
+    dispatch({ type: "SET_USER", payload: user || {} });
+    return user;
+  },
+});
+function Navigation(props) {
   const [currentActiveLink, setCurrentActiveLink] = React.useState("Home");
-  const [user, setUser] = React.useState({});
-  const [logedIn, setLogedIn] = React.useState(false);
+  const [user, setUser] = React.useState(props.user);
+  const [logedIn, setLogedIn] = React.useState(props.user_id ? true : false);
 
   const activeLinkHandler = (el) => {
     setCurrentActiveLink(el.target.innerText);
   };
-  const fetchUser = async () => {
-    const user = await getFunction("/users/me");
-    console.log(user);
-    if (user._id) setUser(user);
-    else setUser({});
-  };
+
   const logOut = async () => {
     const data = await postFunction("/users/logOut");
-    console.log(data);
-    data.ok && setUser({});
+    data.ok && props.saveUser();
   };
+
   React.useEffect(() => {
-    fetchUser();
-  }, []);
-  React.useEffect(() => {
+    props.saveUser();
+    setUser(props.user);
     user._id ? setLogedIn(true) : setLogedIn(false);
-  }, [user]);
+  }, []);
+
+  React.useEffect(() => {
+    setUser(props.user);
+    props.user._id ? setLogedIn(true) : setLogedIn(false);
+  }, [props.user]);
   return (
     <>
       <div id='navigation'>
@@ -54,26 +66,31 @@ function Navigation() {
                   Home
                 </Link>
               </li>
-              <li onClick={activeLinkHandler} className={currentActiveLink === "Search" ? "link-item active" : "link-item"}>
-                <Link to='/search'>
-                  <svg viewBox='0 0 512 512' width='24' height='24' xmlns='http://www.w3.org/2000/svg'>
-                    <path
-                      d='M349.714 347.937l93.714 109.969-16.254 13.969-93.969-109.969q-48.508 36.825-109.207 36.825-36.826 0-70.476-14.349t-57.905-38.603-38.603-57.905-14.349-70.476 14.349-70.476 38.603-57.905 57.905-38.603 70.476-14.349 70.476 14.349 57.905 38.603 38.603 57.905 14.349 70.476q0 37.841-14.73 71.619t-40.889 58.921zM224 377.397q43.428 0 80.254-21.461t58.286-58.286 21.461-80.254-21.461-80.254-58.286-58.285-80.254-21.46-80.254 21.46-58.285 58.285-21.46 80.254 21.46 80.254 58.285 58.286 80.254 21.461z'
-                      fill='currentColor'
-                      fillRule='evenodd'
-                    ></path>
-                  </svg>
-                  Search
-                </Link>
-              </li>
-              <li onClick={activeLinkHandler} className={currentActiveLink === "Your Library" ? "link-item active" : "link-item"}>
-                <Link to='/library/playlists'>
-                  <svg viewBox='0 0 512 512' width='24' height='24' xmlns='http://www.w3.org/2000/svg'>
-                    <path d='M291.301 81.778l166.349 373.587-19.301 8.635-166.349-373.587zM64 463.746v-384h21.334v384h-21.334zM192 463.746v-384h21.334v384h-21.334z' fill='currentColor'></path>
-                  </svg>
-                  Your Library
-                </Link>
-              </li>
+              {logedIn && (
+                <>
+                  <li onClick={activeLinkHandler} className={currentActiveLink === "Search" ? "link-item active" : "link-item"}>
+                    <Link to='/search'>
+                      <svg viewBox='0 0 512 512' width='24' height='24' xmlns='http://www.w3.org/2000/svg'>
+                        <path
+                          d='M349.714 347.937l93.714 109.969-16.254 13.969-93.969-109.969q-48.508 36.825-109.207 36.825-36.826 0-70.476-14.349t-57.905-38.603-38.603-57.905-14.349-70.476 14.349-70.476 38.603-57.905 57.905-38.603 70.476-14.349 70.476 14.349 57.905 38.603 38.603 57.905 14.349 70.476q0 37.841-14.73 71.619t-40.889 58.921zM224 377.397q43.428 0 80.254-21.461t58.286-58.286 21.461-80.254-21.461-80.254-58.286-58.285-80.254-21.46-80.254 21.46-58.285 58.285-21.46 80.254 21.46 80.254 58.285 58.286 80.254 21.461z'
+                          fill='currentColor'
+                          fillRule='evenodd'
+                        ></path>
+                      </svg>
+                      Search
+                    </Link>
+                  </li>
+
+                  <li onClick={activeLinkHandler} className={currentActiveLink === "Your Library" ? "link-item active" : "link-item"}>
+                    <Link to='/library'>
+                      <svg viewBox='0 0 512 512' width='24' height='24' xmlns='http://www.w3.org/2000/svg'>
+                        <path d='M291.301 81.778l166.349 373.587-19.301 8.635-166.349-373.587zM64 463.746v-384h21.334v384h-21.334zM192 463.746v-384h21.334v384h-21.334z' fill='currentColor'></path>
+                      </svg>
+                      Your Library
+                    </Link>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
 
@@ -96,7 +113,7 @@ function Navigation() {
                 <>
                   <div className='d-flex justfy-content-center align-items-center mb-3'>
                     <img src={user.img} height='50px' className='image-fluid rounded-circle mr-3 border border-white' />
-                    <b className='text-white'>{user.username}</b>
+                    <b className='text-white'>{user.username || user.name + " " + user.surname}</b>
                   </div>
                   <button id='log-in' className='col-12' onClick={logOut}>
                     LOG OUT
@@ -123,4 +140,4 @@ function Navigation() {
   );
 }
 
-export default Navigation;
+export default connect(mapStateToProps, mapDispatchToProps)(Navigation);

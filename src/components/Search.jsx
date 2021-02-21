@@ -1,27 +1,20 @@
 import React from "react";
 import SearchTrackCard from "./SearchTrackCard";
 import { Col, Alert } from "react-bootstrap";
+import { getFunction } from "./CRUDFunction";
 
 function Search() {
   const [searchInput, setSearchInput] = React.useState("");
   const [searchResults, setSearchResults] = React.useState();
+  const [message, setMessage] = React.useState("");
   const searchBox = React.useRef(null);
 
   const fetchHandler = async (endp) => {
-    try {
-      const response = await fetch(process.env.REACT_APP_BE_URL + "/music/search/?query=" + endp);
-      console.log(response);
-      if (response.ok) {
-        const data = await response.json();
-        console.log(data);
-        if (data) {
-          return data.data;
-        }
-      } else {
-        alert("There was an error when fetching");
-      }
-    } catch (e) {
-      console.error(`API ERROR : ${e.message}`);
+    const data = await getFunction("/music/search/?query=" + endp);
+    if (data) {
+      return data.data;
+    } else {
+      setMessage("Login or Sign up to search for music");
     }
   };
 

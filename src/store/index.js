@@ -21,10 +21,15 @@ const initialState = {
   },
   currentAlbum: {},
   user: {
-    account: { name: "", email: "", password: "" },
-    liked: [],
-    playlists: [],
-    artists: [],
+    playlist: [],
+    _id: "",
+    img: "",
+    surname: "",
+    name: "",
+    email: "",
+    username: "",
+    createdAt: "",
+    updatedAt: "",
   },
 };
 

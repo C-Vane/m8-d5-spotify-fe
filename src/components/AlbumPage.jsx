@@ -2,36 +2,46 @@ import React from "react";
 import { Link } from "react-router-dom";
 import AlbumPageTrack from "./AlbumPageTrack";
 import { connect } from "react-redux";
+import { getFunction, postFunction } from "./CRUDFunction";
+
+const handlePlaylist = async (song, add) => {
+  const playlist = await postFunction(`/users/liked/${song}?${add}`);
+  console.log(playlist);
+  if (playlist) return playlist;
+};
 
 const mapStateToProps = (state) => state;
 
 const mapDispatchToProps = (dispatch) => ({
   saveCurrentSong: (currentSong) => dispatch({ type: "SET_CURRENT_SONG", payload: currentSong }),
-  addToFavorite: (id) => dispatch({ type: "ADD_SONGS_LIKED", payload: id }),
-  removeFromFavorite: (id) => dispatch({ type: "REMOVE_SONGS_LIKED", payload: id }),
+  addToFavorite: async (id) => {
+    const playlist = await handlePlaylist(id, "add=true");
+    dispatch({ type: "ADD_SONG_TO_PLAYLIST", payload: playlist });
+  },
+  removeFromFavorite: async (id) => {
+    const playlist = await handlePlaylist(id);
+    dispatch({ type: "REMOVE_SONG_FROM_PLAYLIST", payload: playlist });
+  },
 });
+
 function AlbumPage(props) {
   const [albumID, setAlbumID] = React.useState(props.location.pathname.substr(7, props.location.pathname.length));
   const [albumData, setAlbumData] = React.useState({});
   const [trackList, setTracklist] = React.useState([]);
-
+  const [liked, setLiked] = React.useState(false);
   const fetchAlbumDataHandler = async (endp) => {
-    try {
-      const response = await fetch(process.env.REACT_APP_BE_URL + "/music/album?query=" + endp);
-      console.log(response);
-      if (response.ok) {
-        const data = await response.json();
-        if (data) {
-          setAlbumData(data);
-          setTracklist(data.tracks.data);
-        }
-      } else {
-        alert("There was an error when fetching");
-      }
-    } catch (e) {
-      console.error(`API ERROR : ${e.message}`);
+    const data = await getFunction("/music/album?query=" + endp);
+    if (data) {
+      setAlbumData(data);
+      setTracklist(data.tracks.data);
+      setLiked(props.user.playlist.some((liked) => liked === albumID));
+    } else {
+      alert("There was an error when fetching");
     }
   };
+  React.useEffect(() => {
+    setLiked(props.user.playlist.some((liked) => liked === albumID));
+  }, [props.user.playlist]);
 
   const currentSong = {
     cover: albumData.cover_medium,
@@ -70,8 +80,8 @@ function AlbumPage(props) {
             </button>{" "}
             <p id='num-of-songs'> {albumData && albumData.nb_tracks} Songs </p>
             <div className='mini-buttons mt-4'>
-              <button className='btn btn-heart' onClick={() => (props.user.liked.some((liked) => liked.id === albumData.id) ? props.removeFromFavorite(albumData) : props.addToFavorite(albumData))}>
-                <i className={props.user.liked.some((liked) => liked.id === albumData.id) ? "fa fa-heart" : "far fa-heart"}></i>
+              <button className='btn btn-heart' onClick={() => (liked ? props.removeFromFavorite(albumData.id) : props.addToFavorite(albumData.id))}>
+                <i className={liked ? "fa fa-heart" : "far fa-heart"}></i>
               </button>
               <button className='btn btn-more'>...</button>
             </div>
