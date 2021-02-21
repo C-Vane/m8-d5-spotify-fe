@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 const mapStateToProps = (state) => state;
+
 function PlayerBar(props) {
   let [tracks, setTracks] = useState([]);
   let [song, setSong] = useState(0);
@@ -22,7 +23,7 @@ function PlayerBar(props) {
             <div
               className='player-cover-img'
               style={{
-                backgroundImage: `url(${props.currentSong.cover || tracks[0].album.cover || "http://placecorgi.com/260/180"})`,
+                backgroundImage: `url(${props.currentSong.cover || (tracks[song] && tracks[song].album.cover) || "http://placecorgi.com/260/180"})`,
               }}
             ></div>
             <div className='song-title-info'>

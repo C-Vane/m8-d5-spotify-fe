@@ -78,6 +78,7 @@ function ArtistPage(props) {
     fetchArtistDataHandler(artistID);
     setPage(1);
   }, [artistID, props.match.params.id]);
+
   return (
     <aside id='artist-page'>
       <div id='artist-container' style={{ minHeight: "100vh" }}>
